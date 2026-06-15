@@ -53,6 +53,14 @@ const requiredStringFields = [
     'organizer',
 ] as const;
 
+/**
+ * Validates that a string is non-empty after trimming and returns the trimmed value.
+ *
+ * @param value - The string to validate and trim
+ * @param fieldName - The name of the field being validated, used in error messages
+ * @returns The trimmed string
+ * @throws Error if the trimmed string is empty
+ */
 function ensureNonEmpty(value: string, fieldName: string): string {
     const normalized = value.trim();
     if (!normalized) {
@@ -61,6 +69,11 @@ function ensureNonEmpty(value: string, fieldName: string): string {
     return normalized;
 }
 
+/**
+ * Converts a title string to a URL-friendly slug.
+ *
+ * @returns A lowercase slug with whitespace and special characters converted to hyphens.
+ */
 function slugify(title: string): string {
     return title
         .toLowerCase()
@@ -71,6 +84,13 @@ function slugify(title: string): string {
         .replace(/^-+|-+$/g, '');
 }
 
+/**
+ * Converts a date value to its ISO 8601 string representation.
+ *
+ * @param dateValue - The date value to normalize
+ * @returns The ISO 8601 string representation of the date
+ * @throws If the date value is invalid
+ */
 function normalizeDateToIso(dateValue: string): string {
     // Expect ISO 8601 date format (YYYY-MM-DD or full ISO string)
     const isoDatePattern = /^\d{4}-\d{2}-\d{2}(T[\d:.]+Z?)?$/;
@@ -84,6 +104,16 @@ function normalizeDateToIso(dateValue: string): string {
     return parsed.toISOString();
 }
 
+/**
+ * Normalizes a time string to 24-hour HH:MM format.
+ *
+ * Accepts both 12-hour (HH:MM AM/PM) and 24-hour (HH:MM) formats and converts
+ * them to a canonical 24-hour representation with zero-padded hour and minute.
+ *
+ * @param timeValue - The time string to normalize
+ * @returns A time string in 24-hour HH:MM format
+ * @throws Error if the time format is invalid, minutes are outside 00–59, or hours are outside valid ranges
+ */
 function normalizeTimeValue(timeValue: string): string {
     const match = timeValue.trim().match(/^(\d{1,2}):(\d{2})(?:\s*([aApP][mM]))?$/);
     if (!match) {
