@@ -27,11 +27,11 @@ const BookingSchema = new Schema<IBooking>(
 );
 
 BookingSchema.pre('save', async function () {
-    // Keep email normalized before storage.
-    this.email = this.email.trim().toLowerCase();
     if (!this.email) {
         throw new Error('email is required');
     }
+    // Keep email normalized before storage.
+    this.email = this.email.trim().toLowerCase();
 
     // Prevent orphan bookings by checking the referenced event exists.
     if (this.isNew || this.isModified('eventId')) {
