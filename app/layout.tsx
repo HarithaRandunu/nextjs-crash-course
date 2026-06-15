@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   description: "The Hub for Every Dev Event You Mustn't Miss",
 };
 
+/**
+ * Renders the root layout for the application.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{
