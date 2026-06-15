@@ -72,6 +72,11 @@ function slugify(title: string): string {
 }
 
 function normalizeDateToIso(dateValue: string): string {
+    // Expect ISO 8601 date format (YYYY-MM-DD or full ISO string)
+    const isoDatePattern = /^\d{4}-\d{2}-\d{2}(T[\d:.]+Z?)?$/;
+    if (!isoDatePattern.test(dateValue.trim())) {
+        throw new Error('date must be in ISO 8601 format (YYYY-MM-DD)');
+    }
     const parsed = new Date(dateValue);
     if (Number.isNaN(parsed.getTime())) {
         throw new Error('date must be a valid date value');
