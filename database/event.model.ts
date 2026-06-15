@@ -117,8 +117,8 @@ EventSchema.pre('save', function () {
     }
 
     // Ensure list fields are present and non-empty.
-    this.agenda = this.agenda.map((item) => ensureNonEmpty(item, 'agenda item'));
-    this.tags = this.tags.map((item) => ensureNonEmpty(item, 'tag'));
+    this.agenda = (this.agenda ?? []).map((item) => ensureNonEmpty(item, 'agenda item'));
+    this.tags = (this.tags ?? []).map((item) => ensureNonEmpty(item, 'tag'));
     if (this.agenda.length === 0) {
         throw new Error('agenda is required');
     }
