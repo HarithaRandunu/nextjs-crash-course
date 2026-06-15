@@ -30,6 +30,26 @@ interface LightRaysProps {
     className?: string;
 }
 
+type Uniform<T> = { value: T };
+
+type LightRaysUniforms = {
+    iTime: Uniform<number>;
+    iResolution: Uniform<[number, number]>;
+    rayPos: Uniform<[number, number]>;
+    rayDir: Uniform<[number, number]>;
+    raysColor: Uniform<[number, number, number]>;
+    raysSpeed: Uniform<number>;
+    lightSpread: Uniform<number>;
+    rayLength: Uniform<number>;
+    pulsating: Uniform<number>;
+    fadeDistance: Uniform<number>;
+    saturation: Uniform<number>;
+    mousePos: Uniform<[number, number]>;
+    mouseInfluence: Uniform<number>;
+    noiseAmount: Uniform<number>;
+    distortion: Uniform<number>;
+};
+
 const DEFAULT_COLOR = "#ffffff";
 
 const hexToRgb = (hex: string): [number, number, number] => {
@@ -87,12 +107,12 @@ const LightRays: React.FC<LightRaysProps> = ({
                                                  className = "",
                                              }) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const uniformsRef = useRef<any>(null);
+    const uniformsRef = useRef<LightRaysUniforms | null>(null);
     const rendererRef = useRef<Renderer | null>(null);
     const mouseRef = useRef({ x: 0.5, y: 0.5 });
     const smoothMouseRef = useRef({ x: 0.5, y: 0.5 });
     const animationIdRef = useRef<number | null>(null);
-    const meshRef = useRef<any>(null);
+    const meshRef = useRef<Mesh | null>(null);
     const cleanupFunctionRef = useRef<(() => void) | null>(null);
     const [isVisible, setIsVisible] = useState(false);
     const observerRef = useRef<IntersectionObserver | null>(null);
